@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Enter Order Number</title>
+  </head>
+  <body>
+    <h2>Enter Order Number</h2>
+    <form action="{% url 'invoice_view' %}" method="get">
+      <input
+        type="number"
+        name="order_number"
+        placeholder="Order Number"
+        required
+      />
+      <button type="submit">Submit</button>
+    </form>
+  </body>
+</html>
