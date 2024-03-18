@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Invoice for Order #{{ order.ono }}</title>
+  </head>
+  <body>
+    <h2>Invoice for Order #{{ order.ono }}</h2>
+    <p>Customer: {{ customer.cname }} ({{ customer.cno }})</p>
+    <p>ZIP Code: {{ customer.zip }}</p>
+    <p>Taken By: Employee #{{ order.eno }}</p>
+    <p>Received on: {{ order.received }}</p>
+    <p>Shipped on: {{ order.shipped }}</p>
+    <table border="1">
+      <tr>
+        <th>Part No</th>
+        <th>Part Name</th>
+        <th>Quantity</th>
+        <th>Price</th>
+        <th>Sum</th>
+      </tr>
+      {% for detail in order_details %}
+      <tr>
+        <td>{{ detail.part.pno }}</td>
+        <td>{{ detail.part.pname }}</td>
+        <td>{{ detail.qty }}</td>
+        <td>{{ detail.part.prices }}</td>
+        <td>{{ detail.sum }}</td>
+      </tr>
+      {% endfor %}
+    </table>
+    <h3>Total: {{ total_sum }}</h3>
+  </body>
+</html>
