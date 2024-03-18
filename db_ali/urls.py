@@ -19,4 +19,8 @@ from django.contrib import admin
 from django.urls import path
 from dbapp import views
 
-urlpatterns = [path("admin/", admin.site.urls), path("", views.invoice_view)]
+urlpatterns = [
+    path("admin/", admin.site.urls),
+    path("", views.home_view, name="home_view"),  # Home view to enter order number
+    path("invoice/", views.invoice_view, name="invoice_view"),
+]
