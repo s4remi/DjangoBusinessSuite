@@ -10,12 +10,11 @@ def home_view(request):
 
 
 def invoice_view(request, order_number):
-    # Get the order based on the order_number
-    try:
-        order = Orders.objects.get(ono=order_number)
-    except Orders.DoesNotExist:
-        return render(request, "order_not_found.html", {"order_number": order_number})
+    order_number = request.GET.get("order_number")
 
+    if not order_number:
+        # Redirect back to home if no order_number is provided
+        return redirect("home_view")
     # Fetch related details
     order_details = Odetails.objects.filter(ono=order_number)
     customer = Customers.objects.get(cno=order.cno)
