@@ -21,6 +21,6 @@ from dbapp import views
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("", views.home_view, name="home_view"),  # Home view to enter order number
+    path("", views.home_view, name="home_view"),
     path("invoice/", views.invoice_view, name="invoice_view"),
 ]

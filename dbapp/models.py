@@ -11,7 +11,7 @@ from django.db import models
 
 
 class Customers(models.Model):
-    cno = models.IntegerField(blank=True, null=True)
+    cno = models.IntegerField(primary_key=True)
     cname = models.CharField(max_length=18, blank=True, null=True)
     street = models.CharField(max_length=30, blank=True, null=True)
     zip = models.CharField(max_length=6, blank=True, null=True)
@@ -23,7 +23,7 @@ class Customers(models.Model):
 
 
 class Employees(models.Model):
-    eno = models.IntegerField(blank=True, null=True)
+    eno = models.IntegerField(primary_key=True)
     ename = models.CharField(max_length=18, blank=True, null=True)
     zip = models.CharField(max_length=6, blank=True, null=True)
     hdate = models.DateField(blank=True, null=True)
@@ -33,20 +33,28 @@ class Employees(models.Model):
         db_table = "employees"
 
 
-class Odetails(models.Model):
-    ono = models.IntegerField(blank=True, null=True)
-    pno = models.IntegerField(blank=True, null=True)
-    qty = models.IntegerField(blank=True, null=True)
+class Parts(models.Model):
+    pno = models.IntegerField(primary_key=True)
+    pname = models.CharField(max_length=30, blank=True, null=True)
+    qoh = models.IntegerField(blank=True, null=True)
+    prices = models.DecimalField(
+        max_digits=6, decimal_places=2, blank=True, null=True
+    )  # Adjusted max_digits
+    wlevel = models.IntegerField(blank=True, null=True)
 
     class Meta:
         managed = False
-        db_table = "odetails"
+        db_table = "parts"
 
 
 class Orders(models.Model):
-    ono = models.IntegerField(blank=True, null=True)
-    cno = models.IntegerField(blank=True, null=True)
-    eno = models.IntegerField(blank=True, null=True)
+    ono = models.IntegerField(primary_key=True)
+    cno = models.ForeignKey(
+        Customers, on_delete=models.CASCADE, db_column="cno", blank=True, null=True
+    )
+    eno = models.ForeignKey(
+        Employees, on_delete=models.CASCADE, db_column="eno", blank=True, null=True
+    )
     received = models.DateField(blank=True, null=True)
     shipped = models.DateField(blank=True, null=True)
 
@@ -55,20 +63,23 @@ class Orders(models.Model):
         db_table = "orders"
 
 
-class Parts(models.Model):
-    pno = models.IntegerField(blank=True, null=True)
-    pname = models.CharField(max_length=30, blank=True, null=True)
-    qoh = models.IntegerField(blank=True, null=True)
-    prices = models.DecimalField(max_digits=4, decimal_places=2, blank=True, null=True)
-    wlevel = models.IntegerField(blank=True, null=True)
+class Odetails(models.Model):
+    id = models.AutoField(primary_key=True)  # Adding an explicit ID for the primary key
+    ono = models.ForeignKey(
+        Orders, on_delete=models.CASCADE, db_column="ono", blank=True, null=True
+    )
+    pno = models.ForeignKey(
+        Parts, on_delete=models.CASCADE, db_column="pno", blank=True, null=True
+    )
+    qty = models.IntegerField(blank=True, null=True)
 
     class Meta:
         managed = False
-        db_table = "parts"
+        db_table = "odetails"
 
 
 class Zipcodes(models.Model):
-    zip = models.CharField(max_length=6, blank=True, null=True)
+    zip = models.CharField(max_length=6, primary_key=True)
     city = models.CharField(max_length=15, blank=True, null=True)
 
     class Meta:
