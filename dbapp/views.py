@@ -24,9 +24,12 @@ def invoice_view(request):
     # In case of multiple detail records, aggregate part information and calculate sums dynamically
     for detail in order_details:
         # Assuming detail.part is a Parts object fetched through a foreign key relation in Odetails
-        detail.part_name = detail.pno.pname
-        detail.part_price = detail.pno.prices
-        detail.sum = detail.qty * detail.pno.prices
+        # detail.part_name = detail.pno.pname
+        # detail.part_price = detail.pno.prices
+        # detail.sum = detail.qty * detail.pno.prices
+        part = Parts.objects.get(pno=detail.pno_id)
+        detail.part = part
+        detail.sum = detail.qty * part.prices
 
     # Calculate the total order sum
     total_sum = sum(detail.sum for detail in order_details)

@@ -21,14 +21,15 @@
       </tr>
       {% for detail in order_details %}
       <tr>
-        <td>{{ detail.part.pno }}</td>
-        <td>{{ detail.part.pname }}</td>
+        <td>{{ detail.pno.pno }}</td>
+        <td>{{ detail.pno.pname }}</td>
         <td>{{ detail.qty }}</td>
-        <td>{{ detail.part.prices }}</td>
+        <td>{{ detail.pno.prices }}</td>
         <td>{{ detail.sum }}</td>
       </tr>
       {% endfor %}
     </table>
     <h3>Total: {{ total_sum }}</h3>
+    <button type=submit>salam<button>
   </body>
 </html>
