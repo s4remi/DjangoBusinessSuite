@@ -1,7 +1,12 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 # Create your views here.
 from .models import Orders, Odetails, Parts, Customers
+
+
+# Add home view function
+def home_view(request):
+    return render(request, "home.html")
 
 
 def invoice_view(request, order_number):
