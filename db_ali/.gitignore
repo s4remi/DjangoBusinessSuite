@@ -9,7 +9,8 @@ __pycache__/
 # .gitignore content
 .DS_Store
 __pycache__/
-
+# In .gitignore
+.DS_Store
 # Distribution / packaging
 .Python
 env/
