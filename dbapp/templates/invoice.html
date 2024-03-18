@@ -8,7 +8,7 @@
     <h2>Invoice for Order #{{ order.ono }}</h2>
     <p>Customer: {{ customer.cname }} ({{ customer.cno }})</p>
     <p>ZIP Code: {{ customer.zip }}</p>
-    <p>Taken By: Employee #{{ order.eno }}</p>
+    <p>Taken By: Employee #{{ order.eno.ename }}</p>
     <p>Received on: {{ order.received }}</p>
     <p>Shipped on: {{ order.shipped }}</p>
     <table border="1">
