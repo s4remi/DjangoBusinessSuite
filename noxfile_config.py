@@ -1,0 +1,1 @@
+'DJANGO_SETTINGS_MODULE': 'db_ali.settings'

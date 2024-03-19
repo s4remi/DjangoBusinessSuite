@@ -75,16 +75,33 @@ WSGI_APPLICATION = "db_ali.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.mysql",
-        "NAME": "db_ali",
-        "USER": "root",
-        "PASSWORD": "",
-        "HOST": "127.0.0.1",
-        "PORT": "3306",
+# copy from the DB Exercise lab book page 117
+import pymysql  # noqa: 402
+
+pymysql.version_info = (1, 4, 6, "final", 0)  # change mysqlclient version
+pymysql.install_as_MySQLdb()
+# [START db_setup]
+if os.getenv("GAE_APPLICATION", None):
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.mysql",
+            "HOST": "/cloudsql/db-ali:us-east1:db-ali-instance",
+            "USER": "root",
+            "PASSWORD": "123456",
+            "NAME": "db_ali",
+        }
     }
-}
+else:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.mysql",
+            "NAME": "db_ali",
+            "USER": "root",
+            "PASSWORD": "123456",
+            "HOST": "34.23.142.60",
+            "PORT": "3306",
+        }
+    }
 
 
 # Password validation
@@ -122,7 +139,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = "static/"
-STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+STATIC_ROOT = "static/"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
